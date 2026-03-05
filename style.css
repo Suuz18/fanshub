@@ -1,0 +1,118 @@
+/* Importación de tipografías desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;400;700;900&display=swap');
+
+/* Reset y estilos base del cuerpo */
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: #050505; 
+    color: white; 
+    scroll-behavior: smooth; /* Hace que el salto entre secciones sea fluido */
+    overflow-x: hidden; 
+}
+
+/* Tipografía especial para títulos */
+.font-title { font-family: 'Syncopate', sans-serif; }
+
+/* Estilo Glassmorphism: Fondo translúcido con desenfoque */
+.glass { 
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(15px); 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+}
+
+/* Efecto de brillo neón rosa */
+.pink-neon { 
+    border: 1px solid #db2777; 
+    box-shadow: 0 0 20px rgba(219, 39, 119, 0.2); 
+}
+
+/* Animación de la marquesina (texto infinito) */
+@keyframes marquee { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(-50%); } 
+}
+
+.animate-marquee { 
+    display: inline-flex; 
+    animation: marquee 20s linear infinite; 
+}
+
+/* Estilización de la barra de scroll en el chat del juego */
+#game-chat::-webkit-scrollbar { width: 4px; }
+#game-chat::-webkit-scrollbar-thumb { background: #db2777; border-radius: 10px; }
+
+/* Efecto hover en las fotos de los artistas: de gris a color y zoom */
+.artist-card:hover img { transform: scale(1.05); filter: grayscale(0); }
+.artist-card img { transition: all 0.5s ease; filter: grayscale(1); }
+
+/* Animación del punto rojo de "Live" */
+.live-dot { animation: blink 1s infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* Suavizado de la transición en el contador de vistas */
+#live-views { transition: all 0.2s ease-out; display: inline-block; }
+
+/* Animación del carrete de fotos horizontal */
+@keyframes scrollGallery {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-280px * 4 - 1rem * 4)); }
+}
+
+.animate-scroll-gallery {
+    display: flex;
+    width: max-content;
+    animation: scrollGallery 30s linear infinite;
+}
+
+/* Pausa la animación del carrete cuando el mouse está encima */
+.animate-scroll-gallery:hover {
+    animation-play-state: paused;
+}
+
+/* Efecto de escala en las imágenes del carrete */
+.animate-scroll-gallery .group:hover img {
+    transform: scale(1.1);
+}
+
+/* Estilo de las tarjetas del blog */
+.blog-card {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.blog-card:hover {
+    transform: translateY(-10px);
+    border-color: #db2777;
+}
+
+/* Gradiente para las etiquetas de categoría */
+.category-tag {
+    background: linear-gradient(90deg, #db2777, #7c3aed);
+}
+
+/* Animación de "pop" para los botones de reacción */
+.reaction-pop {
+    animation: pop 0.3s ease-out;
+}
+@keyframes pop {
+    50% { transform: scale(1.5); }
+}
+
+.hidden { display: none !important; }
+
+/* Oculta la barra de scroll pero permite el movimiento */
+#gallery-grid {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#gallery-grid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+/* Evita que el scroll se quede a medias entre videos */
+.snap-x {
+    scroll-snap-type: x mandatory;
+}
+
+.snap-center {
+    scroll-snap-align: center;
+}

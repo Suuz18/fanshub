@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>38/10 WORLD | EL HUB DEFINITIVO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.min.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#050505] text-white">
+
+    <nav class="fixed top-0 w-full z-[100] glass border-b border-white/10 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <span class="font-title font-bold text-lg tracking-tighter italic">38/10 <span class="text-pink-600">HUB</span></span>
+        </div>
+        <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-widest uppercase text-zinc-400">
+            <a href="#inicio" class="hover:text-pink-500">Inicio</a>
+            <a href="#musica" class="hover:text-pink-500">Música</a>
+            <a href="#galeria" class="hover:text-pink-500">Visuals</a>
+            <a href="#juegos" class="hover:text-pink-500">Arcade</a>
+            <a href="#comunidad" class="hover:text-pink-500">Comunidad</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="score" class="bg-pink-600 px-3 py-1 rounded-full text-[10px] font-black italic">0 PTS</span>
+        </div>
+    </nav>
+
+    <div class="fixed top-[68px] w-full z-[90] bg-pink-600 py-1 overflow-hidden whitespace-nowrap">
+        <div class="animate-marquee font-black text-[9px] tracking-[0.3em] uppercase italic">
+            <span> 🔥 #NADIECOMONOSOTROS TENDENCIA // APOYA A DANI BARRANKO Y JLEXIS // MOVIMIENTO 38/10 ACTIVO // &nbsp;</span>
+        </div>
+    </div>
+
+    <div id="game-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 hidden px-6">
+        <div class="glass p-10 rounded-[40px] border border-pink-600 text-center max-w-sm w-full">
+            <h4 id="modal-title" class="font-title text-xl mb-4 italic uppercase"></h4>
+            <p id="modal-body" class="text-sm text-zinc-400 mb-8 italic"></p>
+            <button onclick="closeModal()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase">Entendido</button>
+        </div>
+    </div>
+
+    <section id="inicio" class="h-screen relative flex items-center justify-center pt-20">
+        <img src="banner.jpg" class="absolute inset-0 w-full h-full object-cover opacity-40"> 
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-black"></div>
+        <div class="relative z-10 text-center px-4">
+            <h1 class="text-6xl md:text-[100px] font-title font-bold italic leading-none mb-6">NADIE COMO<br><span class="text-pink-600">NOSOTROS</span></h1>
+            <p class="text-zinc-400 text-lg mb-8 max-w-xl mx-auto italic font-light">"La unión definitiva entre Dani Barranco, Jlexis y el Movimiento 38/10."</p>
+            <button onclick="playAt(0)" class="bg-white text-black px-12 py-4 rounded-full font-black text-xs hover:bg-pink-600 hover:text-white transition-all uppercase tracking-widest italic">Ver Video Oficial</button>
+        </div>
+    </section>
+
+    <section id="galeria" class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="font-title text-2xl mb-12 italic border-l-4 border-pink-600 pl-4 uppercase">The <span class="text-pink-600">Stars</span></h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="artist-card relative group overflow-hidden rounded-[40px] glass h-[500px]">
+                <img src="191ee651-5ea4-4dc6-8d28-edbd8acb5f4e.jpg" class="w-full h-full object-cover"> 
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-8 left-8">
+                    <h3 class="font-title text-4xl italic">DANI <span class="text-pink-600">B.</span></h3>
+                </div>
+            </div>
+            <div class="artist-card relative group overflow-hidden rounded-[40px] glass h-[500px]">
+                <img src="b83eaec8-1fac-49ff-acd2-cab3dbaed6ce.jpg" class="w-full h-full object-cover"> 
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-8 left-8">
+                    <h3 class="font-title text-4xl italic">J<span class="text-pink-600">LEXIS</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 overflow-hidden relative carousel-container">
+            <div class="flex gap-4 animate-scroll-gallery whitespace-nowrap">
+                <div class="min-w-[220px] h-[300px] rounded-[30px] overflow-hidden glass border border-white/10 flex-shrink-0 carousel-item">
+                    <img src="foto1.jpg" class="w-full h-full object-cover grayscale transition-all duration-700">
+                </div>
+                <div class="min-w-[220px] h-[300px] rounded-[30px] overflow-hidden glass border border-white/10 flex-shrink-0 carousel-item">
+                    <img src="foto2.jpg" class="w-full h-full object-cover grayscale transition-all duration-700">
+                </div>
+                <div class="min-w-[220px] h-[300px] rounded-[30px] overflow-hidden glass border border-white/10 flex-shrink-0 carousel-item">
+                    <img src="foto3.jpg" class="w-full h-full object-cover grayscale transition-all duration-700">
+                </div>
+                <div class="min-w-[220px] h-[300px] rounded-[30px] overflow-hidden glass border border-white/10 flex-shrink-0 carousel-item">
+                    <img src="foto4.jpg" class="w-full h-full object-cover grayscale transition-all duration-700">
+                </div>
+                </div>
+        </div>
+
+        <div class="mt-32">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div>
+            <h2 class="font-title text-4xl mb-2 italic uppercase tracking-tighter">
+                Movimiento <span class="text-pink-600">38/10</span>
+            </h2>
+            <p class="text-[9px] text-zinc-500 italic tracking-[0.4em] uppercase">
+                Desliza para explorar el movimiento.
+            </p>
+        </div>
+        <button onclick="openUploadModal()" class="bg-white text-black px-10 py-4 rounded-2xl text-[10px] font-black uppercase hover:bg-pink-600 hover:text-white transition-all">
+            + Subir Clip
+        </button>
+    </div>
+
+    <div class="relative group">
+        <div id="gallery-grid" class="flex gap-6 overflow-x-auto pb-10 scrollbar-hide snap-x snap-mandatory px-4" style="scrollbar-width: none; -ms-overflow-style: none;">
+            </div>
+
+            <button onclick="scrollGallery(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-pink-600 hover:scale-110">
+    <i data-lucide="chevron-left" class="w-6 h-6"></i>
+</button>
+
+<button onclick="scrollGallery(1)" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-pink-600 hover:scale-110">
+    <i data-lucide="chevron-right" class="w-6 h-6"></i>
+</button>
+        
+        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-zinc-950 to-transparent pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-zinc-950 to-transparent pointer-events-none"></div>
+    </div>
+</div>
+</section>
+
+<div id="upload-modal" class="fixed inset-0 z-[300] flex items-center justify-center bg-black/95 hidden backdrop-blur-md px-6">
+    <div class="glass p-8 rounded-[40px] border border-pink-600/50 max-w-md w-full shadow-2xl">
+        <h4 class="font-title text-xl mb-6 italic uppercase text-center text-white">SUBIR AL <span class="text-pink-600">HUB</span></h4>
+        <div class="space-y-4">
+            <input id="upload-url" type="text" placeholder="Pega el link (TikTok, YouTube o MP4)..." class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 outline-none text-sm italic text-white focus:border-pink-600">
+            <select id="upload-category" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 outline-none text-[10px] font-black uppercase text-zinc-400 focus:border-pink-600">
+                <option value="Cover">#Cover/Video</option>
+                <option value="TikTok">#TikTokTrend</option>
+                <option value="Live">#DesdeElShow</option>
+                <option value="Random">#Random</option>
+            </select>
+            <div class="flex gap-3 pt-4">
+                <button onclick="closeUploadModal()" class="flex-1 bg-zinc-800 text-white py-4 rounded-2xl font-black text-[10px] uppercase">Cerrar</button>
+                <button onclick="submitToGallery()" class="flex-1 bg-pink-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase">Publicar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <section id="musica" class="py-24 px-6 max-w-7xl mx-auto">
+        <h2 class="font-title text-2xl mb-12 italic border-l-4 border-pink-600 pl-4 uppercase">Video <span class="text-pink-600">Player</span></h2>
+        
+        <div class="glass rounded-[40px] overflow-hidden mb-12 bg-black aspect-video w-full max-w-4xl mx-auto border border-white/10 shadow-2xl">
+            <video id="main-video" class="w-full h-full object-cover">
+                <source src="video1.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12" id="song-list"></div>
+
+        <div class="glass p-8 rounded-[40px] border border-white/10 sticky bottom-6 z-50">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="text-center md:text-left flex-1">
+                    <p id="current-song-title" class="font-black italic text-pink-500 uppercase text-xs tracking-widest">Selecciona un track</p>
+                    <p class="text-[10px] text-zinc-500 uppercase font-bold">38/10 Official Playlist</p>
+                </div>
+                <div class="flex items-center gap-6">
+                    <button onclick="toggleShuffle()" id="btn-shuffle" class="text-zinc-500 hover:text-white transition"><i data-lucide="shuffle" class="w-5"></i></button>
+                    <button onclick="prevTrack()" class="text-white hover:text-pink-600 transition"><i data-lucide="skip-back" class="w-6"></i></button>
+                    <button onclick="togglePlay()" id="btn-play" class="bg-pink-600 p-4 rounded-full hover:scale-110 transition shadow-lg"><i data-lucide="play" class="w-6 text-white"></i></button>
+                    <button onclick="nextTrack()" class="text-white hover:text-pink-600 transition"><i data-lucide="skip-forward" class="w-6"></i></button>
+                    <button onclick="toggleRepeat()" id="btn-repeat" class="text-zinc-500 hover:text-white transition"><i data-lucide="repeat" class="w-5"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="juegos" class="py-24 px-6 max-w-6xl mx-auto">
+        <h2 class="font-title text-4xl mb-12 italic text-center uppercase">38/10 <span class="text-pink-600">Arcade Hub</span></h2>
+        <div id="arcade-menu" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div onclick="openImpostor()" class="glass p-8 rounded-[40px] border border-pink-600/30 hover:border-pink-600 cursor-pointer transition-all group">
+                <h3 class="font-title text-xl mb-2 italic">JUEGO IMPOSTOR</h3>
+                <p class="text-xs text-zinc-500 italic uppercase">Encuentra quién miente en el movimiento.</p>
+                <div class="mt-4 text-pink-600 font-black text-[10px] tracking-widest uppercase group-hover:translate-x-2 transition-transform">Jugar ahora →</div>
+            </div>
+            <div class="glass p-8 rounded-[40px] border border-white/5 opacity-40 cursor-not-allowed">
+                <h3 class="font-title text-xl mb-2 italic">COMING SOON</h3>
+                <p class="text-xs text-zinc-500 italic uppercase">Nuevo reto para el 38/10.</p>
+            </div>
+        </div>
+
+        <div id="impostor-interface" class="hidden glass rounded-[50px] p-6 md:p-10 pink-neon relative overflow-hidden">
+            <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+                <h4 class="font-title text-xs italic text-pink-600">JUEGO IMPOSTOR</h4>
+                <button onclick="location.reload()" class="text-[9px] font-black uppercase tracking-widest text-zinc-500 hover:text-white">Cerrar Juego</button>
+            </div>
+            <div class="flex justify-center gap-4 mb-8">
+                <div id="p-0" class="text-center opacity-50"><div class="w-10 h-10 rounded-full bg-pink-600 mx-auto mb-1 flex items-center justify-center font-bold text-[10px]">TÚ</div></div>
+                <div id="p-1" class="text-center opacity-50"><div class="w-10 h-10 rounded-full bg-zinc-800 mx-auto mb-1 flex items-center justify-center font-bold text-[10px]">DB</div></div>
+                <div id="p-2" class="text-center opacity-50"><div class="w-10 h-10 rounded-full bg-zinc-800 mx-auto mb-1 flex items-center justify-center font-bold text-[10px]">JX</div></div>
+                <div id="p-3" class="text-center opacity-50"><div class="w-10 h-10 rounded-full bg-zinc-800 mx-auto mb-1 flex items-center justify-center font-bold text-[10px]">ST</div></div>
+            </div>
+            <div id="game-container" class="text-center">
+                <div class="flex justify-between items-center mb-6">
+                    <span id="turn-indicator" class="bg-white text-black px-4 py-1 rounded-full text-[10px] font-black uppercase italic">Esperando...</span>
+                    <span id="round-indicator" class="text-pink-500 text-[10px] font-black uppercase italic">Partida Detenida</span>
+                </div>
+                <div id="game-play" class="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[300px]">
+                    <div id="game-chat" class="bg-black/40 rounded-3xl p-4 text-left overflow-y-auto h-[300px] border border-white/5 space-y-2 text-[11px] italic"></div>
+                    <div class="flex flex-col justify-center gap-4">
+                        <div class="glass p-6 rounded-3xl border-dashed border-white/20">
+                            <h3 id="word-box" class="text-2xl font-black italic text-pink-500 uppercase tracking-tighter">****</h3>
+                        </div>
+                        <div id="interaction-area" class="hidden space-y-3">
+                            <input id="clue-input" type="text" placeholder="Tu palabra..." class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 outline-none text-sm italic">
+                            <button onclick="submitClue()" class="w-full bg-pink-600 py-4 rounded-2xl font-black text-[10px] uppercase">Enviar</button>
+                        </div>
+                        <div id="voting-area" class="hidden grid grid-cols-2 gap-2">
+                            <button onclick="castVote(1)" class="py-3 glass rounded-xl hover:bg-white/10 text-[9px] font-bold uppercase">Dani B.</button>
+                            <button onclick="castVote(2)" class="py-3 glass rounded-xl hover:bg-white/10 text-[9px] font-bold uppercase">Jlexis</button>
+                            <button onclick="castVote(3)" class="py-3 glass rounded-xl hover:bg-white/10 text-[9px] font-bold uppercase">Staff</button>
+                            <button onclick="castVote(0)" class="py-3 glass rounded-xl hover:bg-white/10 text-[9px] font-bold uppercase">Tú</button>
+                        </div>
+                    </div>
+                </div>
+                <button id="start-btn" onclick="initGame()" class="w-full bg-white text-black py-5 mt-6 rounded-3xl font-black text-xs uppercase hover:bg-pink-600 transition-all">Empezar Partida</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="comunidad" class="py-24 bg-zinc-950 px-6">
+    <div class="max-w-7xl mx-auto mb-16">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div>
+                <h2 class="font-title text-4xl mb-2 italic uppercase">38/10 <span class="text-pink-600">Feed</span></h2>
+                <p class="text-[9px] text-zinc-500 italic tracking-[0.3em] uppercase">Noticias exclusivas y updates del movimiento</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="filterBlog('all')" class="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-[9px] font-black uppercase hover:bg-pink-600 transition">Todos</button>
+                <button onclick="filterBlog('musica')" class="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-[9px] font-black uppercase hover:bg-pink-600 transition">Música</button>
+            </div>
+        </div>
+        
+        <div id="blog-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+            </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto glass rounded-[50px] overflow-hidden flex flex-col h-[600px]">
+    <div class="p-6 border-b border-white/10 bg-white/5 flex justify-between items-center text-sm font-bold italic uppercase">
+        <h3>MURO <span class="text-pink-600">38/10</span></h3>
+    </div>
+    
+    <div id="chat-messages" class="flex-1 overflow-y-auto p-8 space-y-4"></div>
+
+    <div id="chat-login" class="p-6 bg-black/80 flex flex-col gap-4 border-t border-white/10">
+    <p class="text-[10px] text-pink-500 font-black uppercase text-center italic">Únete al movimiento 38/10</p>
+    <input id="auth-email" type="email" placeholder="Email..." class="bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 outline-none text-sm italic focus:border-pink-600">
+    <input id="auth-password" type="password" placeholder="Contraseña..." class="bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 outline-none text-sm italic focus:border-pink-600">
+    <div class="flex gap-2">
+        <button onclick="handleSignUp()" class="flex-1 bg-zinc-800 text-white px-6 py-4 rounded-2xl font-black text-[10px] uppercase hover:bg-zinc-700 transition">Registrarse</button>
+        <button onclick="handleLogin()" class="flex-1 bg-white text-black px-6 py-4 rounded-2xl font-black text-[10px] uppercase hover:bg-pink-600 hover:text-white transition">Entrar</button>
+    </div>
+</div>
+
+    <div id="chat-input-area" class="p-6 bg-black flex gap-4 hidden border-t border-white/10">
+        <input id="chat-input" type="text" placeholder="Escribe al muro..." class="flex-1 bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 outline-none text-sm italic">
+        <button onclick="sendMessage()" class="bg-pink-600 p-4 rounded-2xl hover:scale-105 transition"><i data-lucide="send" class="text-white"></i></button>
+    </div>
+</div>
+</section>
+
+    <footer class="py-20 flex flex-col items-center justify-center bg-black border-t border-white/5">
+        <div class="glass p-8 rounded-[40px] border border-pink-600/30 flex flex-col items-center max-w-xs w-full">
+            <div class="flex items-center gap-2 mb-4 bg-red-600/20 px-3 py-1 rounded-full">
+                <span class="w-2 h-2 bg-red-600 rounded-full live-dot"></span>
+                <span class="text-[9px] font-black uppercase tracking-widest text-red-500">Live Statistics</span>
+            </div>
+            <h5 class="text-zinc-500 text-[10px] font-bold uppercase mb-1 tracking-tighter italic">Nadie Como Nosotros</h5>
+            <span id="live-views" class="font-title text-4xl md:text-5xl font-black italic tracking-tighter text-white">1,348,291</span>
+            <p class="text-[8px] text-zinc-600 uppercase mt-4 font-bold tracking-[0.3em]">Real-time Statistics</p>
+        </div>
+        <p class="mt-12 text-zinc-900 font-title text-[9px] uppercase tracking-[1em]">Dani Barranco x Jlexis • 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>lucide.createIcons();</script>
+
+    <div id="confirm-modal" class="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 hidden backdrop-blur-sm px-6">
+    <div class="glass p-8 rounded-[40px] border border-pink-600/50 text-center max-w-sm w-full shadow-[0_0_50px_rgba(219,39,119,0.2)]">
+        <div class="w-16 h-16 bg-pink-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i data-lucide="trash-2" class="text-pink-600 w-8 h-8"></i>
+        </div>
+        <h4 class="font-title text-xl mb-2 italic uppercase">¿BORRAR HUELLA?</h4>
+        <p class="text-[11px] text-zinc-400 mb-6 italic uppercase tracking-widest">Esta acción eliminará tu mensaje del muro para siempre.</p>
+        
+        <div class="flex items-center justify-center gap-2 mb-8 cursor-pointer group" onclick="toggleSkipConfirm()">
+            <div id="skip-checkbox" class="w-4 h-4 border border-zinc-700 rounded flex items-center justify-center transition-colors">
+                <i data-lucide="check" class="w-3 text-pink-600 hidden"></i>
+            </div>
+            <span class="text-[9px] font-black uppercase text-zinc-500 group-hover:text-zinc-300 transition">No volver a preguntar</span>
+        </div>
+
+        <div class="flex gap-3">
+            <button onclick="closeConfirmModal()" class="flex-1 bg-zinc-900 text-white py-4 rounded-2xl font-black text-[10px] uppercase hover:bg-zinc-800 transition">Cancelar</button>
+            <button id="confirm-delete-btn" class="flex-1 bg-pink-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase hover:scale-105 transition">Eliminar</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
